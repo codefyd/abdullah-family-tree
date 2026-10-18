@@ -14,38 +14,38 @@
 <style>
 /* Layout: a full-bleed pannable map; a thin header on top, floating controls bottom-left, person sheet on the right (bottom on phones). */
 :root {
-  --bg: #eef2ef;
-  --bg-grid: #dfe6e1;
-  --surface: #ffffff;
-  --surface-2: #f5f8f6;
-  --ink: #18231f;
-  --muted: #5b6a63;
-  --line: #d3dcd7;
-  --accent: #1f5f4e;
+  --bg: #f6f2ed;
+  --bg-grid: #ebe3da;
+  --surface: #fffdfa;
+  --surface-2: #f3ede6;
+  --ink: #2c221d;
+  --muted: #7b6b61;
+  --line: #e4d9ce;
+  --accent: #9a4b3a;
   --accent-ink: #ffffff;
-  --accent-soft: #dcebe4;
+  --accent-soft: #f4e3dc;
   --danger: #b4372f;
   --danger-soft: #f7e3e1;
-  --dec: #6f6a64;
-  --dec-soft: #e6e3df;
-  --shadow: 0 1px 2px rgb(20 40 32 / .08), 0 8px 24px rgb(20 40 32 / .10);
+  --dec: #7d736b;
+  --dec-soft: #ece6e0;
+  --shadow: 0 1px 2px rgb(60 35 25 / .06), 0 8px 24px rgb(60 35 25 / .08);
   --font-display: "Almarai", "Segoe UI", Tahoma, "Noto Sans Arabic", "Geeza Pro", sans-serif;
   --font-body: "Almarai", "Segoe UI", Tahoma, "Noto Sans Arabic", "Geeza Pro", "Arial", sans-serif;
   --radius: 14px;
 }
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
-    --bg: #0f1513; --bg-grid: #18211e; --surface: #18201d; --surface-2: #1e2824;
-    --ink: #e6ece9; --muted: #9aa8a1; --line: #2c3833; --accent: #6fcfae; --accent-ink: #0d1a15;
-    --accent-soft: #1f3a31; --danger: #f08a80; --danger-soft: #3a1f1c; --dec: #b5aea6; --dec-soft: #34302c;
+    --bg: #171311; --bg-grid: #221c19; --surface: #211b18; --surface-2: #2a2320;
+    --ink: #f1e9e3; --muted: #b3a49a; --line: #3a302b; --accent: #e3a08b; --accent-ink: #2a1510;
+    --accent-soft: #3d2721; --danger: #f08a80; --danger-soft: #3a1f1c; --dec: #b8aea6; --dec-soft: #34302c;
     --shadow: 0 1px 2px rgb(0 0 0 / .4), 0 10px 28px rgb(0 0 0 / .45);
     color-scheme: dark;
   }
 }
 :root[data-theme="dark"] {
-  --bg: #0f1513; --bg-grid: #18211e; --surface: #18201d; --surface-2: #1e2824;
-  --ink: #e6ece9; --muted: #9aa8a1; --line: #2c3833; --accent: #6fcfae; --accent-ink: #0d1a15;
-  --accent-soft: #1f3a31; --danger: #f08a80; --danger-soft: #3a1f1c; --dec: #b5aea6; --dec-soft: #34302c;
+  --bg: #171311; --bg-grid: #221c19; --surface: #211b18; --surface-2: #2a2320;
+  --ink: #f1e9e3; --muted: #b3a49a; --line: #3a302b; --accent: #e3a08b; --accent-ink: #2a1510;
+  --accent-soft: #3d2721; --danger: #f08a80; --danger-soft: #3a1f1c; --dec: #b8aea6; --dec-soft: #34302c;
   --shadow: 0 1px 2px rgb(0 0 0 / .4), 0 10px 28px rgb(0 0 0 / .45);
   color-scheme: dark;
 }
@@ -112,8 +112,8 @@ button, input, select, textarea { font: inherit; color: inherit; }
 /* Stage */
 .stage { position: relative; flex: 1; min-height: 0; overflow: hidden;
   background-color: var(--bg);
-  background-image: radial-gradient(var(--bg-grid) 1.2px, transparent 1.3px);
-  background-size: 22px 22px;
+  background-image: radial-gradient(var(--bg-grid) 1px, transparent 1.1px);
+  background-size: 26px 26px;
 }
 #map { position: absolute; inset: 0; width: 100%; height: 100%; touch-action: none; cursor: grab; user-select: none; -webkit-user-select: none; }
 #map.dragging { cursor: grabbing; }
@@ -189,32 +189,32 @@ button, input, select, textarea { font: inherit; color: inherit; }
 </style>
 <style id="mapcss">
 .edge { transition: opacity .25s ease; }
-.has-sel .edge:not(.hl) { opacity: .2; }
-.has-sel .node:not(.on-path):not(.sel) { opacity: .5; }
+.has-sel .edge:not(.hl) { opacity: .22; }
+.has-sel .node:not(.on-path):not(.sel) { opacity: .45; }
 .node { cursor: pointer; transition: opacity .25s ease; outline: none; }
 .node:focus-visible .halo { opacity: 1; stroke-dasharray: 4 3; }
-.node .name { font-family: var(--font-body); font-weight: 700; font-size: 14px; fill: var(--ink); text-anchor: middle; direction: rtl;
-  paint-order: stroke; stroke: var(--bg); stroke-width: 4px; stroke-linejoin: round; }
-.node.root .name { font-family: var(--font-display); font-size: 22px; font-weight: 800; }
-.node .ini { font-family: var(--font-body); font-weight: 700; text-anchor: middle; direction: rtl; pointer-events: none; }
-.node.root .ini { font-family: var(--font-display); }
-.badge rect { fill: var(--surface-2); stroke: var(--line); stroke-width: 1; }
-.badge text { font-family: var(--font-body); font-size: 10.5px; font-weight: 700; fill: var(--muted); text-anchor: middle; direction: rtl; }
-.badge.married rect { fill: var(--accent-soft); stroke: none; }
-.badge.married text { fill: var(--accent); }
-.badge.deceased rect { fill: var(--dec-soft); stroke: none; }
-.badge.deceased text { fill: var(--dec); }
-.badge.unknown rect { fill: none; stroke-dasharray: 3 2; }
-.dec-ring { fill: none; stroke: var(--dec); stroke-width: 1.6; stroke-dasharray: 4 3; }
+.card { fill: var(--surface); stroke-width: 1.3; }
+.node.root .card { stroke-width: 1.8; }
+.node.dead .card { stroke-dasharray: 5 3; }
+.node:hover .card { stroke-width: 2.2; }
+.node .name { font-family: var(--font-body); font-weight: 700; font-size: 13.5px; fill: var(--ink); }
+.node.root .name { font-family: var(--font-display); font-size: 19px; font-weight: 800; }
+.node .st { font-family: var(--font-body); font-size: 10.5px; font-weight: 400; fill: var(--muted); }
+.node .st.married { fill: var(--accent); }
+.node .st.deceased { fill: var(--dec); }
+.node.root .st { font-size: 11.5px; }
+.node .ini { font-family: var(--font-body); font-weight: 700; text-anchor: middle; pointer-events: none; }
+.lod-far .node .st { display: none; }
+.lod-far .node .name { font-size: 15px; }
 .counter { cursor: pointer; }
-.counter circle { fill: var(--surface); stroke-width: 1.8; }
-.counter text { font-family: var(--font-body); font-size: 11px; font-weight: 700; text-anchor: middle; }
-.counter:hover circle { stroke-width: 2.6; }
-.halo { fill: none; stroke: var(--accent); stroke-width: 3; opacity: 0; }
+.counter circle { fill: var(--surface); stroke-width: 1.4; }
+.counter text { font-family: var(--font-body); font-size: 9.5px; font-weight: 700; text-anchor: middle; }
+.counter:hover circle { stroke-width: 2.4; }
+.halo { fill: none; stroke: var(--accent); stroke-width: 2.5; opacity: 0; }
 .node.sel .halo { opacity: 1; }
-.node.on-path .av { stroke-width: 3.2; }
+.node.on-path .card { stroke-width: 2.4; }
 .node.pulse .halo { animation: pulse 1s ease-out 3; }
-@keyframes pulse { 0% { opacity: 1; stroke-width: 3; } 100% { opacity: 0; stroke-width: 18; } }
+@keyframes pulse { 0% { opacity: 1; stroke-width: 2.5; } 100% { opacity: 0; stroke-width: 16; } }
 @media (prefers-reduced-motion: reduce) { .node.pulse .halo { animation: none; opacity: 1; } }
 </style>
 
@@ -241,6 +241,7 @@ button, input, select, textarea { font: inherit; color: inherit; }
       <button type="button" data-cmd="import-json" role="menuitem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 15V3m0 0 4 4m-4-4-4 4M4 17v3h16v-3"/></svg>استيراد ملف بيانات</button>
       <button type="button" data-cmd="export-png" role="menuitem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="9" cy="10" r="2"/><path d="m21 16-5-5-9 9"/></svg>تصدير الخريطة كصورة</button>
       <hr>
+      <button type="button" data-cmd="collapse-deep" role="menuitem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/></svg>طي الأحفاد (عرض الأبناء فقط)</button>
       <button type="button" data-cmd="expand-all" role="menuitem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>فتح كل الفروع</button>
       <button type="button" data-cmd="reset" role="menuitem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 3-6.7M3 4v5h5"/></svg>إعادة الضبط إلى البيانات الأصلية</button>
       <p class="note">التعديلات تُحفظ في ذاكرة هذا المتصفح فقط. لنقلها لجهاز آخر أو مشاركتها، صدّر ملف البيانات ثم استورده هناك.</p>
@@ -253,8 +254,8 @@ button, input, select, textarea { font: inherit; color: inherit; }
       <g id="viewport">
         <g id="content">
           <defs>
+            <clipPath id="clip13"><circle r="13"/></clipPath>
             <clipPath id="clip20"><circle r="20"/></clipPath>
-            <clipPath id="clip44"><circle r="44"/></clipPath>
           </defs>
           <g id="edges"></g>
           <g id="nodes"></g>
@@ -365,9 +366,7 @@ button, input, select, textarea { font: inherit; color: inherit; }
 const STORE_KEY = "abdullah-family-map:data:v1";
 const PREF_KEY = "abdullah-family-map:prefs:v1";
 const SVGNS = "http://www.w3.org/2000/svg";
-const SLOT = 88;            // vertical slot per leaf in balanced layout
-const RADIAL_SPACING = 134; // min distance between neighbours in radial layout (covers the node box at diagonal angles)
-const BRANCH_HUES = [174, 222, 34, 340, 112, 272];
+const BRANCH_HUES = [176, 214, 36, 346, 96, 282]; // one soft hue per son of the root, inherited by his descendants
 const REDUCED = matchMedia("(prefers-reduced-motion: reduce)").matches;
 const $ = (s) => document.querySelector(s);
 const nf = new Intl.NumberFormat("ar-SA");
@@ -433,6 +432,7 @@ function validateData(obj) {
   return { schemaVersion: 1, familyName: String(obj.familyName || "عائلة عبدالله"), rootId: roots[0].id, people };
 }
 function reindex() {
+  clearCaches();
   byId = new Map(); childrenOf = new Map();
   for (const p of data.people) { byId.set(p.id, p); childrenOf.set(p.id, []); }
   for (const p of data.people) if (p.parentId && childrenOf.has(p.parentId)) childrenOf.get(p.parentId).push(p.id);
@@ -490,7 +490,14 @@ function setStatus(text, warn) {
 /* ---------- Family helpers ---------- */
 const kidsOf = (id) => childrenOf.get(id) || [];
 const visKids = (id) => (collapsed.has(id) ? [] : kidsOf(id));
-function depthOf(id) { let d = 0, p = byId.get(id); while (p && p.parentId) { d++; p = byId.get(p.parentId); } return d; }
+const depthCache = new Map(), hueCache = new Map(), colorCache = new Map(), sizeCache = new Map(), twCache = new Map();
+function clearCaches() { depthCache.clear(); hueCache.clear(); colorCache.clear(); }
+function depthOf(id) {
+  let d = depthCache.get(id); if (d != null) return d;
+  d = 0; let p = byId.get(id);
+  while (p && p.parentId) { d++; p = byId.get(p.parentId); }
+  depthCache.set(id, d); return d;
+}
 function ancestors(id) { const out = []; let p = byId.get(id); while (p) { out.push(p.id); p = p.parentId ? byId.get(p.parentId) : null; } return out; }
 function lineage(id) {
   const chain = ancestors(id).map((a) => byId.get(a));
@@ -501,25 +508,38 @@ function lineage(id) {
 function branchIndex(id) {
   const anc = ancestors(id);
   if (anc.length < 2) return -1;
-  const top = anc[anc.length - 2];
-  return kidsOf(data.rootId).indexOf(top);
+  return kidsOf(data.rootId).indexOf(anc[anc.length - 2]);
 }
-function hueOf(id) { const i = branchIndex(id); return i < 0 ? 160 : i < BRANCH_HUES.length ? BRANCH_HUES[i] : Math.round((BRANCH_HUES[0] + i * 137.5) % 360); }
+function hueOf(id) {
+  let h = hueCache.get(id); if (h != null) return h;
+  const i = branchIndex(id);
+  h = i < 0 ? 20 : i < BRANCH_HUES.length ? BRANCH_HUES[i] : Math.round((BRANCH_HUES[0] + i * 137.5) % 360);
+  hueCache.set(id, h); return h;
+}
 function isDark() {
   const t = document.documentElement.getAttribute("data-theme");
   if (t === "dark") return true; if (t === "light") return false;
   return matchMedia("(prefers-color-scheme: dark)").matches;
 }
+// main: card outline · tint: avatar fill · ink: initial letter · line: branch colour
 function colors(id) {
+  let c = colorCache.get(id); if (c) return c;
   const dark = isDark();
-  if (id === data.rootId) return dark ? { main: "#6fcfae", tint: "#1f3a31", ink: "#c9efe1" } : { main: "#1f5f4e", tint: "#d6e8df", ink: "#1f5f4e" };
-  const h = hueOf(id), l = Math.min(depthOf(id), 4);
-  if (!dark) {
-    const L = [0, 37, 47, 54, 60][l], S = [0, 62, 54, 48, 42][l], TL = [0, 86, 91, 93.5, 95][l];
-    return { main: `hsl(${h} ${S}% ${L}%)`, tint: `hsl(${h} ${S + 8}% ${TL}%)`, ink: `hsl(${h} ${S}% ${Math.max(L - 10, 24)}%)` };
+  if (id === data.rootId) c = dark
+    ? { main: "#e3a08b", tint: "#3d2721", av: "#e3a08b", ink: "#2a1510", line: "#9a6556" }
+    : { main: "#9a4b3a", tint: "#f4e3dc", av: "#9a4b3a", ink: "#ffffff", line: "#cf9a8a" };
+  else {
+    const h = hueOf(id), l = Math.min(depthOf(id), 6);
+    if (!dark) {
+      const L = 40 + l * 4, S = Math.max(24, 46 - l * 3);
+      c = { main: `hsl(${h} ${S}% ${L}%)`, tint: `hsl(${h} ${S + 8}% ${Math.min(90 + l, 95)}%)`, ink: `hsl(${h} ${S + 6}% ${L - 10}%)`, line: `hsl(${h} ${S - 4}% ${Math.min(L + 22, 82)}%)` };
+    } else {
+      const L = 66 + l * 2, S = Math.max(22, 40 - l * 3);
+      c = { main: `hsl(${h} ${S}% ${L}%)`, tint: `hsl(${h} ${S - 8}% ${Math.max(24 - l * 2, 17)}%)`, ink: `hsl(${h} ${S + 8}% ${Math.min(L + 14, 90)}%)`, line: `hsl(${h} ${S - 6}% ${Math.max(L - 28, 32)}%)` };
+    }
+    c.av = c.tint;
   }
-  const L = [0, 63, 72, 78, 82][l], S = [0, 58, 50, 44, 40][l], TL = [0, 24, 20, 18, 17][l];
-  return { main: `hsl(${h} ${S}% ${L}%)`, tint: `hsl(${h} ${S - 18}% ${TL}%)`, ink: `hsl(${h} ${S}% ${Math.min(L + 12, 90)}%)` };
+  colorCache.set(id, c); return c;
 }
 function initial(name) { const n = String(name).trim().replace(/^ال(?=\S{2,})/, ""); return n ? [...n][0] : "؟"; }
 function badgeOf(p) {
@@ -530,20 +550,148 @@ function badgeOf(p) {
   return { cls: "unknown", label: "غير محدد" };
 }
 const measureCtx = document.createElement("canvas").getContext("2d");
+let fontFam = "";
 function textW(s, size = 10.5, weight = 700) {
-  measureCtx.font = `${weight} ${size}px ${getComputedStyle(document.documentElement).getPropertyValue("--font-body")}`;
-  return measureCtx.measureText(s).width;
+  const key = size + "|" + weight + "|" + s;
+  let w = twCache.get(key); if (w != null) return w;
+  fontFam ||= getComputedStyle(document.documentElement).getPropertyValue("--font-body");
+  measureCtx.font = `${weight} ${size}px ${fontFam}`;
+  w = measureCtx.measureText(s).width;
+  twCache.set(key, w); return w;
+}
+function resetMeasure() { twCache.clear(); sizeCache.clear(); }
+
+/* ---------- Cards ---------- */
+const CARD_H = 42, ROOT_H = 56;
+function nodeSize(id) {
+  const p = byId.get(id), root = id === data.rootId, label = badgeOf(p).label;
+  const key = (root ? "R|" : "") + p.name + "|" + label;
+  let s = sizeCache.get(key); if (s) return s;
+  const r = root ? 20 : 13;
+  const nw = textW(p.name, root ? 19 : 13.5, root ? 800 : 700), sw = textW(label, root ? 11.5 : 10.5, 400);
+  s = { w: Math.ceil(10 + 2 * r + 9 + Math.max(nw, sw) + 15), h: root ? ROOT_H : CARD_H, r };
+  sizeCache.set(key, s); return s;
 }
 
-/* ---------- Layout (tidy tree; recomputed on every change) ---------- */
-function colX(d) { return d <= 0 ? 0 : 215 + (d - 1) * 175; }
+/* ---------- Layouts (computed on every change, no fixed positions) ---------- */
+const BAND = 10;
+function addBand(cont, y0, y1, l, r) {
+  for (let b = Math.floor(y0 / BAND), e = Math.floor(y1 / BAND); b <= e; b++) {
+    const c = cont.get(b);
+    if (!c) cont.set(b, [l, r]); else { if (l < c[0]) c[0] = l; if (r > c[1]) c[1] = r; }
+  }
+}
+// Top-down tidy tree. Subtrees are packed against each other's outline (10px bands) so branches nest.
+// From the sons' generation down, a family wider than WRAP_W (or brothers who have no children) is listed
+// vertically on a spine instead, so 400+ names keep a balanced, readable shape. Sibling order is always kept.
+const SIB_SEP = 16, TREE_SEP = 30, STACK_IN = 22, VGAP = 8;
+// try a few wrap widths and keep the shape closest to the screen's proportions
+function layoutVertical() {
+  const { w, h } = stageSize();
+  const want = clamp((w || 1200) / (h || 800), 0.7, 2.2);
+  const box = (pos) => {
+    let x0 = Infinity, x1 = -Infinity, y0 = Infinity, y1 = -Infinity;
+    for (const p of pos.values()) { x0 = Math.min(x0, p.x); x1 = Math.max(x1, p.x); y0 = Math.min(y0, p.y); y1 = Math.max(y1, p.y); }
+    return { bw: x1 - x0 + 160, bh: y1 - y0 + 80 };
+  };
+  const plain = layoutVerticalWith(Infinity), pb = box(plain);
+  if (pb.bw * 0.7 <= (w || 1200) && pb.bh * 0.7 <= (h || 800)) return plain; // a small tree stays a classic tree
+  let best = null;
+  for (const wrap of [420, 640, 900, 1300, 1900, 2800, Infinity]) {
+    const pos = wrap === Infinity ? plain : layoutVerticalWith(wrap);
+    const { bw, bh } = box(pos);
+    const score = Math.abs(Math.log((bw / bh) / want)) + Math.log(bw * bh) * 0.15; // right shape first, then compactness
+    if (!best || score < best.score) best = { score, pos };
+    if (bw / bh > want * 1.5) break; // wider settings only get wider
+  }
+  return best.pos;
+}
+function layoutVerticalWith(WRAP_W) {
+  const snap = (v) => Math.ceil(v / BAND - 1e-9) * BAND;
+  const shiftInto = (dst, src, dx, dy) => { const db = dy / BAND; for (const [b, c] of src) addBand(dst, (b + db) * BAND, (b + db) * BAND, c[0] + dx, c[1] + dx); };
+  const leftOf = (cont) => { let l = Infinity; for (const c of cont.values()) l = Math.min(l, c[0]); return l; };
+  const widthOf = (cont) => { let l = Infinity, r = -Infinity; for (const c of cont.values()) { l = Math.min(l, c[0]); r = Math.max(r, c[1]); } return r - l; };
+  // stack items (subtrees, root at their own 0,0) under a spine at x=0; first root at y0, spine starts at topY
+  const column = (items, y0, topY) => {
+    const pos = new Map(), cont = new Map();
+    let y = y0, bottom = -Infinity, lastY = y0;
+    items.forEach((it, i) => {
+      if (i) y = snap(bottom + VGAP + nodeSize(it.id).h / 2);
+      const dx = STACK_IN - leftOf(it.cont);
+      for (const [nid, p] of it.pos) pos.set(nid, { ...p, x: p.x + dx, y: p.y + y });
+      Object.assign(pos.get(it.id), { stacked: true, sdx: -dx, sdy: topY - y });
+      shiftInto(cont, it.cont, dx, y);
+      bottom = Math.max(bottom, y + it.bottom); lastY = y;
+    });
+    addBand(cont, topY, lastY, -4, 4);
+    return { pos, cont, bottom, run: true };
+  };
+  // pack units side by side at the same height; returns positions relative to the middle of first and last unit
+  const row = (units) => {
+    const offs = [], acc = new Map();
+    units.forEach((u, i) => {
+      let off = 0;
+      if (i) {
+        const sep = (u.leaf || u.run) && (units[i - 1].leaf || units[i - 1].run) ? SIB_SEP : TREE_SEP;
+        off = -Infinity;
+        for (const [b, c] of u.cont) { const a = acc.get(b); if (a) off = Math.max(off, a[1] - c[0] + sep); }
+        if (off === -Infinity) off = offs[i - 1];
+      }
+      offs.push(off);
+      shiftInto(acc, u.cont, off, 0);
+    });
+    const mid = (offs[0] + offs[offs.length - 1]) / 2, pos = new Map(), cont = new Map();
+    units.forEach((u, i) => { for (const [nid, p] of u.pos) pos.set(nid, { ...p, x: p.x + offs[i] - mid }); });
+    shiftInto(cont, acc, -mid, 0);
+    return { pos, cont, bottom: Math.max(...units.map((u) => u.bottom)), width: widthOf(acc) };
+  };
+  const lay = (id, d) => {
+    const s = nodeSize(id), ch = visKids(id);
+    const pos = new Map([[id, { x: 0, y: 0, side: 1 }]]), cont = new Map();
+    addBand(cont, -s.h / 2, s.h / 2 + (kidsOf(id).length ? 10 : 0), -s.w / 2, s.w / 2);
+    if (!ch.length) return { id, pos, cont, leaf: true, bottom: s.h / 2 + (kidsOf(id).length ? 10 : 0) };
+    const below = s.h / 2 + 9, cdy = id === data.rootId ? 120 : 110;
+    const subs = ch.map((c) => lay(c, d + 1));
+    let block;
+    if (d > 0 && subs.every((u) => u.leaf)) block = column(subs, cdy, below);
+    else {
+      // children placed in a row at y = cdy; runs of 2+ childless brothers become short lists
+      const units = [];
+      let run = [];
+      const flush = () => {
+        if (run.length >= 2) units.push(column(run, cdy, cdy - CARD_H / 2 - 14));
+        else if (run.length) units.push(shifted(run[0], cdy));
+        run = [];
+      };
+      for (const u of subs) { if (u.leaf) run.push(u); else { flush(); units.push(shifted(u, cdy)); } }
+      flush();
+      block = row(units);
+      if (d > 0 && block.width > WRAP_W) block = column(subs, cdy, below);
+    }
+    for (const [nid, p] of block.pos) pos.set(nid, p);
+    shiftInto(cont, block.cont, 0, 0);
+    return { id, pos, cont, leaf: false, bottom: block.bottom };
+  };
+  const shifted = (u, dy) => {
+    const pos = new Map(), cont = new Map();
+    for (const [nid, p] of u.pos) pos.set(nid, { ...p, y: p.y + dy });
+    shiftInto(cont, u.cont, 0, dy);
+    return { ...u, pos, cont, bottom: u.bottom + dy };
+  };
+  const { pos } = lay(data.rootId, 0);
+  pos.forEach((p) => { p.x = -p.x; p.side = -p.side; if (p.sdx != null) p.sdx = -p.sdx; }); // mirror: first sibling on the right, lists hang to the left
+  return pos;
+}
 function layoutBalanced() {
-  const pos = new Map();
-  const root = data.rootId;
+  const SLOT = 54;
+  const pos = new Map(), root = data.rootId;
   pos.set(root, { x: 0, y: 0, side: 0 });
-  const kids = visKids(root);
-  const nRight = Math.ceil(kids.length / 2);
-  // first siblings on the right (reading start in Arabic), the rest on the left, order preserved
+  const maxW = [];
+  const walk = (id, d) => { maxW[d] = Math.max(maxW[d] || 0, nodeSize(id).w); visKids(id).forEach((c) => walk(c, d + 1)); };
+  walk(root, 0);
+  const colX = [0];
+  for (let d = 1; d < maxW.length; d++) colX[d] = colX[d - 1] + maxW[d - 1] / 2 + (d === 1 ? 74 : 60) + maxW[d] / 2;
+  const kids = visKids(root), nRight = Math.ceil(kids.length / 2);
   for (const [group, side] of [[kids.slice(0, nRight), 1], [kids.slice(nRight), -1]]) {
     if (!group.length) continue;
     let cursor = 0;
@@ -553,10 +701,10 @@ function layoutBalanced() {
       let y;
       if (!ch.length) { y = cursor; cursor += SLOT; }
       else { const ys = ch.map((c) => place(c, d + 1)); y = (ys[0] + ys[ys.length - 1]) / 2; }
-      local.set(id, { x: side * colX(d), y, side });
+      local.set(id, { x: side * colX[d], y, side });
       return y;
     };
-    group.forEach((id, i) => { if (i) cursor += SLOT * 0.45; place(id, 1); });
+    group.forEach((id, i) => { if (i) cursor += SLOT * 0.5; place(id, 1); });
     let mn = Infinity, mx = -Infinity;
     local.forEach((p) => { mn = Math.min(mn, p.y); mx = Math.max(mx, p.y); });
     const off = -(mn + mx) / 2;
@@ -565,86 +713,50 @@ function layoutBalanced() {
   return pos;
 }
 function layoutRadial() {
-  const pos = new Map();
-  const root = data.rootId;
+  const pos = new Map(), root = data.rootId;
   pos.set(root, { x: 0, y: 0, side: 0, a: 0 });
   const w = new Map();
   const weigh = (id) => { const ch = visKids(id); const v = ch.length ? ch.reduce((s, c) => s + weigh(c), 0) : 1; w.set(id, v); return v; };
   weigh(root);
   const ang = new Map(), byDepth = [];
   const assign = (id, a0, a1, d) => {
-    if (id !== root) { const a = (a0 + a1) / 2; ang.set(id, { a, d }); (byDepth[d] ||= []).push(a); }
-    const ch = visKids(id);
-    const tot = ch.reduce((s, c) => s + w.get(c), 0);
+    if (id !== root) { const a = (a0 + a1) / 2; ang.set(id, { a, d }); (byDepth[d] ||= []).push({ a, id }); }
+    const ch = visKids(id), tot = ch.reduce((s, c) => s + w.get(c), 0);
     let a = a0;
     for (const c of ch) { const span = (a1 - a0) * w.get(c) / tot; assign(c, a, a + span, d + 1); a += span; }
   };
   const start = -Math.PI / 2;
   assign(root, start, start + Math.PI * 2, 0);
+  const maxW = [nodeSize(root).w];
   const radii = [0];
   for (let d = 1; d < byDepth.length; d++) {
-    const as = (byDepth[d] || []).slice().sort((x, y) => x - y);
+    const row = (byDepth[d] || []).slice().sort((x, y) => x.a - y.a);
+    maxW[d] = Math.max(0, ...row.map((r) => nodeSize(r.id).w));
     let need = 0;
-    if (as.length > 1) {
-      let gap = as[0] + Math.PI * 2 - as[as.length - 1];
-      for (let i = 1; i < as.length; i++) gap = Math.min(gap, as[i] - as[i - 1]);
-      need = RADIAL_SPACING / (2 * Math.sin(Math.min(gap, Math.PI) / 2));
+    if (row.length > 1) {
+      for (let i = 0; i < row.length; i++) {
+        const A = row[i], B = row[(i + 1) % row.length];
+        const gap = i + 1 < row.length ? B.a - A.a : B.a + Math.PI * 2 - A.a;
+        const am = A.a + gap / 2, bw = Math.max(nodeSize(A.id).w, nodeSize(B.id).w);
+        const sa = Math.abs(Math.sin(am)), ca = Math.abs(Math.cos(am));
+        // neighbours sit along the tangent: they clear each other if apart by the card width horizontally or the card height vertically
+        const chord = Math.min(sa > 0.02 ? (bw + 14) / sa : Infinity, ca > 0.02 ? (CARD_H + 12) / ca : Infinity);
+        need = Math.max(need, chord / (2 * Math.sin(Math.min(gap, Math.PI) / 2)));
+      }
     }
-    radii[d] = Math.max(radii[d - 1] + (d === 1 ? 210 : 165), need);
+    radii[d] = Math.max(radii[d - 1] + (maxW[d - 1] + maxW[d]) / 2 + 46, need);
   }
   ang.forEach(({ a, d }, id) => pos.set(id, { x: radii[d] * Math.cos(a), y: radii[d] * Math.sin(a), side: Math.cos(a) >= -1e-6 ? 1 : -1, a }));
   return pos;
 }
-const SLOT_X = 100; // horizontal slot per leaf in the top-down layout
-function rowY(d) { return d <= 0 ? 0 : 200 + (d - 1) * 170; }
-function layoutVertical() {
-  // classic family tree: root on top, generations downward, first sibling on the right (Arabic reading order)
-  const pos = new Map();
-  let cursor = 0;
-  const place = (id, d) => {
-    const ch = visKids(id);
-    let x;
-    if (!ch.length) { x = cursor; cursor -= SLOT_X; }
-    else {
-      const xs = ch.map((c, i) => { if (d === 0 && i) cursor -= SLOT_X * 0.35; return place(c, d + 1); });
-      x = (xs[0] + xs[xs.length - 1]) / 2;
-    }
-    pos.set(id, { x, y: rowY(d), side: 1 });
-    return x;
-  };
-  place(data.rootId, 0);
-  const off = -pos.get(data.rootId).x;
-  pos.forEach((p) => { p.x += off; });
-  return pos;
-}
-const computeLayout = () => (prefs.layout === "radial" ? layoutRadial() : prefs.layout === "balanced" ? layoutBalanced() : layoutVertical());
-// distance from a node's centre to the bottom of its name badge (edges leave from there in the top-down layout)
-const labelBottom = (id) => (id === data.rootId ? 44 + 30 + 20 + 9 : 20 + 19 + 16 + 9);
 
-/* ---------- Edges: tapered bezier branches, thicker near the root ---------- */
-const WIDTH = [13, 6, 3, 2, 1.6];
+const computeLayout = () => (prefs.layout === "radial" ? layoutRadial() : prefs.layout === "balanced" ? layoutBalanced() : layoutVertical());
+
+/* ---------- Edges: soft tapered branches, thicker near the root ---------- */
+const WIDTH = [6.5, 3.6, 2.5, 1.9, 1.6, 1.4, 1.25, 1.15, 1.1];
 const widthAt = (d) => WIDTH[Math.min(d, WIDTH.length - 1)];
-function edgeGeom(p, c) {
-  if (prefs.layout === "radial") {
-    const rp = Math.hypot(p.x, p.y), rc = Math.hypot(c.x, c.y) || 1;
-    const dc = { x: c.x / rc, y: c.y / rc };
-    if (rp < 1) {
-      const t = 0.22, rot = { x: dc.x * Math.cos(t) - dc.y * Math.sin(t), y: dc.x * Math.sin(t) + dc.y * Math.cos(t) };
-      return [p, { x: rot.x * rc * 0.38, y: rot.y * rc * 0.38 }, { x: dc.x * rc * 0.62, y: dc.y * rc * 0.62 }, c];
-    }
-    const dp = { x: p.x / rp, y: p.y / rp }, m = (rp + rc) / 2;
-    return [p, { x: dp.x * m, y: dp.y * m }, { x: dc.x * m, y: dc.y * m }, c];
-  }
-  if (prefs.layout === "vertical") {
-    const my = (p.y + c.y) / 2;
-    return [p, { x: p.x, y: my }, { x: c.x, y: my }, c];
-  }
-  const mx = (p.x + c.x) / 2;
-  return [p, { x: mx, y: p.y }, { x: mx, y: c.y }, c];
-}
-function edgeStart(parentId, p) { return prefs.layout === "vertical" ? { x: p.x, y: p.y + labelBottom(parentId) } : p; }
 function taperPath(pts, w0, w1) {
-  const [a, b, c, d] = pts, N = 22, L = [], R = [];
+  const [a, b, c, d] = pts, N = 16, L = [], R = [];
   for (let i = 0; i <= N; i++) {
     const t = i / N, u = 1 - t;
     const x = u * u * u * a.x + 3 * u * u * t * b.x + 3 * u * t * t * c.x + t * t * t * d.x;
@@ -658,37 +770,79 @@ function taperPath(pts, w0, w1) {
   }
   return `M${L.join("L")}L${R.reverse().join("L")}Z`;
 }
+const isStackEdge = (id) => prefs.layout === "vertical" && !!targets.get(id)?.stacked;
+// control points of the branch from parent position p to child position c (used by the map and the minimap)
+function edgePoints(id, p, c) {
+  const pid = byId.get(id).parentId, ps = nodeSize(pid), cs = nodeSize(id);
+  if (prefs.layout === "vertical") {
+    const s = { x: p.x, y: p.y + ps.h / 2 + 9 }, e = { x: c.x, y: c.y - cs.h / 2 }, my = (s.y + e.y) / 2;
+    return [s, { x: s.x, y: my }, { x: e.x, y: my }, e];
+  }
+  if (prefs.layout === "balanced") {
+    const side = Math.sign(c.x - p.x) || 1;
+    const s = { x: p.x + side * (ps.w / 2 + (pid === data.rootId ? 0 : 9)), y: p.y }, e = { x: c.x - side * cs.w / 2, y: c.y }, mx = (s.x + e.x) / 2;
+    return [s, { x: mx, y: s.y }, { x: mx, y: e.y }, e];
+  }
+  const rp = Math.hypot(p.x, p.y), rc = Math.hypot(c.x, c.y) || 1, dc = { x: c.x / rc, y: c.y / rc };
+  if (rp < 1) {
+    const t = 0.2, rot = { x: dc.x * Math.cos(t) - dc.y * Math.sin(t), y: dc.x * Math.sin(t) + dc.y * Math.cos(t) };
+    return [p, { x: rot.x * rc * 0.4, y: rot.y * rc * 0.4 }, { x: dc.x * rc * 0.62, y: dc.y * rc * 0.62 }, c];
+  }
+  const dp = { x: p.x / rp, y: p.y / rp }, m = (rp + rc) / 2;
+  return [p, { x: dp.x * m, y: dp.y * m }, { x: dc.x * m, y: dc.y * m }, c];
+}
+function edgeD(id, p, c) {
+  if (isStackEdge(id)) {
+    const t = targets.get(id), ps = nodeSize(byId.get(id).parentId), cs = nodeSize(id), f = (v) => v.toFixed(1);
+    const sx = p.x, sy = p.y + ps.h / 2 + 9, spx = c.x + t.sdx, top = Math.max(sy, c.y + t.sdy);
+    const dir = Math.sign(c.x - spx) || -1, ex = c.x - dir * cs.w / 2, R = 10;
+    let d = `M${f(sx)} ${f(sy)}`;
+    if (Math.abs(spx - sx) > 1) { const my = (sy + top) / 2; d += `C${f(sx)} ${f(my)} ${f(spx)} ${f(my)} ${f(spx)} ${f(top)}`; }
+    if (c.y - R <= top) return d + `L${f(spx)} ${f(c.y)}L${f(ex)} ${f(c.y)}`;
+    return d + `L${f(spx)} ${f(c.y - R)}Q${f(spx)} ${f(c.y)} ${f(spx + dir * R)} ${f(c.y)}L${f(ex)} ${f(c.y)}`;
+  }
+  const d = depthOf(id), pts = edgePoints(id, p, c);
+  if (d >= 3) { const f = (v) => v.toFixed(1); return `M${f(pts[0].x)} ${f(pts[0].y)}C${f(pts[1].x)} ${f(pts[1].y)} ${f(pts[2].x)} ${f(pts[2].y)} ${f(pts[3].x)} ${f(pts[3].y)}`; } // fine twigs: a plain curve is enough
+  return taperPath(pts, widthAt(d - 1), widthAt(d));
+}
+function styleEdge(id, hl) {
+  const el = edgeEls.get(id); if (!el) return;
+  const c = colors(id), col = hl ? c.main : c.line;
+  if (isStackEdge(id) || depthOf(id) >= 3) {
+    const sw = isStackEdge(id) ? 1.5 : (widthAt(depthOf(id) - 1) + widthAt(depthOf(id))) / 2;
+    el.setAttribute("fill", "none"); el.setAttribute("stroke", col); el.setAttribute("stroke-width", hl ? sw + 0.8 : sw); el.setAttribute("stroke-linejoin", "round");
+  }
+  else { el.setAttribute("fill", col); el.setAttribute("stroke", "none"); el.removeAttribute("stroke-width"); }
+}
 
 /* ---------- Rendering ---------- */
 const nodesG = $("#nodes"), edgesG = $("#edges"), mapSvg = $("#map"), vpG = $("#viewport");
 function nodeMarkup(p, info) {
-  const isRoot = p.id === data.rootId;
-  const R = isRoot ? 44 : 20;
-  const c = colors(p.id);
-  const sw = isRoot ? 3 : 2;
-  let s = `<circle class="halo" r="${R + 7}"/>`;
-  if (p.lifeStatus === "deceased") s += `<circle class="dec-ring" r="${R + 5}"/>`;
-  s += `<circle class="av" r="${R}" fill="${c.tint}" stroke="${c.main}" stroke-width="${sw}"/>`;
-  if (p.photo) s += `<image href="${esc(p.photo)}" x="${-R}" y="${-R}" width="${2 * R}" height="${2 * R}" clip-path="url(#clip${R})" preserveAspectRatio="xMidYMid slice"/><circle r="${R}" fill="none" stroke="${c.main}" stroke-width="${sw}"/>`;
-  else s += `<text class="ini" dy="0.36em" fill="${c.ink}" font-size="${isRoot ? 34 : 16}">${esc(initial(p.name))}</text>`;
-  const nameY = R + (isRoot ? 30 : 19);
-  s += `<text class="name" y="${nameY}">${esc(p.name)}</text>`;
-  const b = badgeOf(p), bw = Math.ceil(textW(b.label)) + 16;
-  s += `<g class="badge ${b.cls}" transform="translate(0 ${nameY + (isRoot ? 20 : 16)})"><rect x="${-bw / 2}" y="-8.5" width="${bw}" height="17" rx="8.5"/><text dy="0.36em">${esc(b.label)}</text></g>`;
-  const n = kidsOf(p.id).length;
+  const id = p.id, root = id === data.rootId, s = nodeSize(id), c = colors(id), hw = s.w / 2, hh = s.h / 2, rr = root ? 16 : 12;
+  const b = badgeOf(p);
+  let m = `<rect class="halo" x="${-hw - 5}" y="${-hh - 5}" width="${s.w + 10}" height="${s.h + 10}" rx="${rr + 5}"/>`;
+  m += `<rect class="card" x="${-hw}" y="${-hh}" width="${s.w}" height="${s.h}" rx="${rr}" stroke="${c.main}"${root ? ` style="fill:${c.tint}"` : ""}/>`;
+  const ax = hw - 10 - s.r;
+  m += `<g transform="translate(${ax} 0)">`;
+  if (p.photo) m += `<image href="${esc(p.photo)}" x="${-s.r}" y="${-s.r}" width="${2 * s.r}" height="${2 * s.r}" clip-path="url(#clip${s.r})" preserveAspectRatio="xMidYMid slice"/>`;
+  else m += `<circle r="${s.r}" fill="${c.av}"/><text class="ini" dy="0.36em" fill="${c.ink}" font-size="${root ? 18 : 12.5}">${esc(initial(p.name))}</text>`;
+  m += `</g>`;
+  const tx = ax - s.r - 9;
+  m += `<text class="name" x="${tx}" y="${root ? -3 : -2}" direction="rtl" text-anchor="start">${esc(p.name)}</text>`;
+  m += `<text class="st ${b.cls}" x="${tx}" y="${root ? 17 : 13}" direction="rtl" text-anchor="start">${esc(b.label)}</text>`;
+  const n = kidsOf(id).length;
   if (n) {
-    const closed = collapsed.has(p.id);
-    let cx, cy;
-    if (isRoot) { cx = 0; cy = -R - 6; }
-    else { const side = info?.side || 1; cx = side * R * 0.78; cy = -R * 0.78; }
-    const label = closed ? `+${nf.format(n)}` : nf.format(n);
-    const r = closed ? 11.5 : 10;
-    s += `<g class="counter" data-action="toggle" transform="translate(${cx.toFixed(1)} ${cy.toFixed(1)})" role="button" aria-label="${closed ? "فتح" : "طي"} فرع ${esc(p.name)}">`
-      + `<title>${closed ? "فتح الفرع" : "طي الفرع"} (${nf.format(n)} ${n > 2 && n < 11 ? "أبناء" : "من الأبناء"})</title>`
+    const closed = collapsed.has(id), label = closed ? `+${nf.format(n)}` : nf.format(n);
+    const r = Math.max(closed ? 9.5 : 8, textW(label, 9.5, 700) / 2 + 4);
+    let cx = 0, cy = hh + 1;
+    // top-down: at the bottom where branches leave; a collapsed name inside a list keeps it on its free side
+    if (!root && (prefs.layout !== "vertical" || (info?.stacked && closed))) { const side = info?.side || 1; cx = side * (hw + r - 2); cy = 0; }
+    m += `<g class="counter" data-action="toggle" transform="translate(${cx.toFixed(1)} ${cy.toFixed(1)})" role="button" aria-label="${closed ? "فتح" : "طي"} فرع ${esc(p.name)}">`
+      + `<title>${closed ? "فتح الفرع" : "طي الفرع"} (${nf.format(n)})</title>`
       + `<circle r="${r}" stroke="${c.main}" ${closed ? `style="fill:${c.main}"` : ""}/>`
       + `<text dy="0.36em" style="fill:${closed ? "var(--surface)" : c.main}">${label}</text></g>`;
   }
-  return s;
+  return m;
 }
 function ensureNode(id) {
   let el = nodeEls.get(id);
@@ -724,8 +878,7 @@ function drawEdge(id, opacity) {
   if (!el || !person) return;
   const c = cur.get(id), p = cur.get(person.parentId);
   if (!c || !p) return;
-  const d = depthOf(id);
-  el.setAttribute("d", taperPath(edgeGeom(edgeStart(person.parentId, p), c), widthAt(d - 1), widthAt(d)));
+  el.setAttribute("d", edgeD(id, p, c));
   if (opacity != null) el.style.opacity = opacity === 1 ? "" : opacity;
 }
 let tween = null;
@@ -733,25 +886,25 @@ function render({ animate = true } = {}) {
   const vis = visibleIds();
   const visSet = new Set(vis);
   targets = computeLayout();
-  // nodes & edges entering / updating
   for (const id of vis) {
     const p = byId.get(id);
     const el = ensureNode(id);
-    el.innerHTML = nodeMarkup(p, targets.get(id));
+    const m = nodeMarkup(p, targets.get(id));
+    if (el._m !== m) { el.innerHTML = m; el._m = m; }
     el.classList.toggle("root", id === data.rootId);
+    el.classList.toggle("dead", p.lifeStatus === "deceased");
     el.setAttribute("aria-label", lineage(id));
     if (!cur.has(id)) {
       const parentPos = (p.parentId && (cur.get(p.parentId) || targets.get(p.parentId))) || targets.get(id);
-      cur.set(id, { ...parentPos });
+      cur.set(id, { x: parentPos.x, y: parentPos.y });
       el.dataset.entering = "1";
     }
     if (p.parentId) ensureEdge(id);
   }
-  // exiting: fold into nearest visible ancestor
   const exiting = new Map();
   for (const id of [...nodeEls.keys()]) {
     if (visSet.has(id)) continue;
-    if (!byId.has(id)) { // deleted
+    if (!byId.has(id)) {
       nodeEls.get(id).remove(); nodeEls.delete(id);
       edgeEls.get(id)?.remove(); edgeEls.delete(id); cur.delete(id); continue;
     }
@@ -764,21 +917,31 @@ function render({ animate = true } = {}) {
 
   const from = new Map();
   for (const [id] of [...targets, ...exiting]) from.set(id, { ...(cur.get(id) || { x: 0, y: 0 }) });
-  const dur = animate && !REDUCED ? 480 : 0;
+  const dur = animate && !REDUCED ? (vis.length > 250 ? 380 : 480) : 0;
   if (tween) cancelAnimationFrame(tween.raf);
   const t0 = performance.now();
+  // only what moves is redrawn on each frame (an edge moves when either end moves)
+  const moving = new Set();
+  for (const [id, f] of from) {
+    const to = targets.get(id) || exiting.get(id);
+    if (Math.abs(to.x - f.x) > 0.3 || Math.abs(to.y - f.y) > 0.3 || exiting.has(id) || nodeEls.get(id)?.dataset.entering === "1") moving.add(id);
+  }
+  let first = true;
   const step = (now) => {
     const t = dur ? clamp((now - t0) / dur, 0, 1) : 1, e = ease(t);
-    for (const [id, f] of from) {
-      const to = targets.get(id) || exiting.get(id);
+    for (const id of moving) {
+      const f = from.get(id), to = targets.get(id) || exiting.get(id);
       cur.set(id, { x: f.x + (to.x - f.x) * e, y: f.y + (to.y - f.y) * e });
     }
     for (const [id] of from) {
+      const pid = byId.get(id)?.parentId;
+      if (!first && !moving.has(id) && !(pid && moving.has(pid))) continue;
       const entering = nodeEls.get(id)?.dataset.entering === "1";
       const op = exiting.has(id) ? 1 - e : entering ? e : 1;
       placeNode(id, cur.get(id), op);
-      if (byId.get(id)?.parentId) drawEdge(id, op);
+      if (pid) drawEdge(id, op);
     }
+    first = false;
     if (t < 1) { tween = { raf: requestAnimationFrame(step) }; return; }
     tween = null;
     for (const id of exiting.keys()) {
@@ -790,7 +953,9 @@ function render({ animate = true } = {}) {
     drawMinimap();
   };
   if (dur) tween = { raf: requestAnimationFrame(step) }; else step(performance.now());
-  $("#peopleCount").textContent = `${nf.format(data.people.length)} ${data.people.length > 2 && data.people.length < 11 ? "أفراد" : "فردًا"}`;
+  const n = data.people.length;
+  let gens = 0; for (const p of data.people) gens = Math.max(gens, depthOf(p.id) + 1);
+  $("#peopleCount").innerHTML = `<bdi>${nf.format(n)} ${n > 2 && n < 11 ? "أفراد" : "فردًا"}</bdi> · <bdi>${gens === 1 ? "جيل واحد" : gens === 2 ? "جيلان" : `${nf.format(gens)} ${gens < 11 ? "أجيال" : "جيلًا"}`}</bdi>`;
   $("#familyTitle").textContent = data.familyName || "عائلة عبدالله";
   drawMinimap();
 }
@@ -798,15 +963,15 @@ function applySelectionClasses() {
   const path = new Set(selectedId && byId.has(selectedId) ? ancestors(selectedId) : []);
   mapSvg.classList.toggle("has-sel", path.size > 0);
   for (const [id, el] of nodeEls) { el.classList.toggle("on-path", path.has(id)); el.classList.toggle("sel", id === selectedId); }
-  for (const [id, el] of edgeEls) {
-    el.classList.toggle("hl", path.has(id));
-    el.setAttribute("fill", colors(id).main);
-    el.setAttribute("fill-opacity", path.has(id) ? "1" : depthOf(id) <= 1 ? ".92" : ".78");
-  }
+  for (const [id] of edgeEls) styleEdge(id, path.has(id));
 }
 
 /* ---------- View: pan / zoom ---------- */
-function applyView() { vpG.setAttribute("transform", `translate(${view.x.toFixed(2)} ${view.y.toFixed(2)}) scale(${view.k.toFixed(4)})`); drawMiniViewport(); }
+function applyView() {
+  vpG.setAttribute("transform", `translate(${view.x.toFixed(2)} ${view.y.toFixed(2)}) scale(${view.k.toFixed(4)})`);
+  mapSvg.classList.toggle("lod-far", view.k < 0.5); // status lines are unreadable when zoomed far out
+  drawMiniViewport();
+}
 let viewAnim = null;
 function stopViewAnim() { if (viewAnim) { cancelAnimationFrame(viewAnim); viewAnim = null; } }
 function animateView(to, dur = 450) {
@@ -837,23 +1002,31 @@ function boundsOf(ids, pos) {
   let x0 = Infinity, y0 = Infinity, x1 = -Infinity, y1 = -Infinity;
   for (const id of ids) {
     const p = pos.get(id); if (!p) continue;
-    const R = id === data.rootId ? 44 : 20, half = Math.max(R + 8, textW(byId.get(id).name, 14) / 2 + 6);
-    x0 = Math.min(x0, p.x - half); x1 = Math.max(x1, p.x + half);
-    y0 = Math.min(y0, p.y - R - 14); y1 = Math.max(y1, p.y + R + (id === data.rootId ? 62 : 46));
+    const s = nodeSize(id);
+    x0 = Math.min(x0, p.x - s.w / 2 - 14); x1 = Math.max(x1, p.x + s.w / 2 + 14);
+    y0 = Math.min(y0, p.y - s.h / 2 - 8); y1 = Math.max(y1, p.y + s.h / 2 + 14);
   }
   if (!isFinite(x0)) return { x0: -100, y0: -100, x1: 100, y1: 100 };
   return { x0, y0, x1, y1 };
 }
 function fitView(animate = true) {
   const b = boundsOf(visibleIds(), targets), a = usableArea(), pad = 28;
-  const k = clamp(Math.min((a.w - pad * 2) / (b.x1 - b.x0), (a.h - pad * 2) / (b.y1 - b.y0)), 0.12, 1.35);
+  const k = clamp(Math.min((a.w - pad * 2) / (b.x1 - b.x0), (a.h - pad * 2) / (b.y1 - b.y0)), 0.04, 1.35);
   const to = { k, x: a.x + a.w / 2 - k * (b.x0 + b.x1) / 2, y: a.y + a.h / 2 - k * (b.y0 + b.y1) / 2 };
   animateView(to, animate ? 450 : 0);
 }
 function focusOn(id, minK = 1) {
   const p = targets.get(id); if (!p) return;
   const a = usableArea(), k = Math.max(view.k, minK);
-  animateView({ k, x: a.x + a.w / 2 - p.x * k, y: a.y + a.h / 2 - (p.y + 14) * k });
+  animateView({ k, x: a.x + a.w / 2 - p.x * k, y: a.y + a.h / 2 - p.y * k });
+}
+// whole tree when it is readable; otherwise start readable at the root and let people zoom out
+function initialView() {
+  fitView(false);
+  if (view.k >= 0.3) return;
+  const a = usableArea(), k = 0.62, r = targets.get(data.rootId);
+  const y = prefs.layout === "vertical" ? a.y + 40 + (ROOT_H / 2) * k : a.y + a.h / 2;
+  animateView({ k, x: a.x + a.w / 2 - r.x * k, y: y - r.y * k }, 0);
 }
 function ensureVisible(id) {
   // pan (without zooming) when the person sheet would cover the selected node
@@ -863,7 +1036,7 @@ function ensureVisible(id) {
 }
 function zoomAt(cx, cy, factor) {
   const { left, top } = stageSize();
-  const k = clamp(view.k * factor, 0.12, 3.2);
+  const k = clamp(view.k * factor, 0.04, 3.2);
   const px = cx - left, py = cy - top;
   const wx = (px - view.x) / view.k, wy = (py - view.y) / view.k;
   view.k = k; view.x = px - wx * k; view.y = py - wy * k; applyView();
@@ -894,7 +1067,7 @@ mapSvg.addEventListener("pointermove", (e) => {
   } else if (pointers.size >= 2) {
     const [a, b] = [...pointers.values()];
     const { left, top } = stageSize();
-    const k = clamp(gesture.k0 * Math.hypot(a.x - b.x, a.y - b.y) / gesture.d0, 0.12, 3.2);
+    const k = clamp(gesture.k0 * Math.hypot(a.x - b.x, a.y - b.y) / gesture.d0, 0.04, 3.2);
     const wx = (gesture.mx - left - gesture.vx) / gesture.k0, wy = (gesture.my - top - gesture.vy) / gesture.k0;
     const mx = (a.x + b.x) / 2, my = (a.y + b.y) / 2;
     view.k = k; view.x = mx - left - wx * k; view.y = my - top - wy * k; applyView();
@@ -944,16 +1117,16 @@ function drawMinimap() {
   const mini = $("#mini");
   mini.setAttribute("viewBox", `${miniBox.x0} ${miniBox.y0} ${miniBox.x1 - miniBox.x0} ${miniBox.y1 - miniBox.y0}`);
   mini.setAttribute("preserveAspectRatio", "xMidYMid meet");
+  const sw = Math.max((miniBox.x1 - miniBox.x0) / 176, (miniBox.y1 - miniBox.y0) / 124) * 1.2;
   let s = "";
   for (const id of ids) {
-    const p = byId.get(id), t = targets.get(id);
-    if (p.parentId && targets.get(p.parentId)) {
-      const q = targets.get(p.parentId);
-      const [a, c1, c2, d] = edgeGeom(edgeStart(p.parentId, q), t);
-      s += `<path d="M${a.x} ${a.y}C${c1.x} ${c1.y} ${c2.x} ${c2.y} ${d.x} ${d.y}" fill="none" stroke="${colors(id).main}" stroke-width="${Math.max(widthAt(depthOf(id)) * 2, 6)}" stroke-opacity=".7"/>`;
-    }
+    const p = byId.get(id), t = targets.get(id), q = p.parentId && targets.get(p.parentId);
+    if (q) s += `<path d="M${q.x.toFixed(0)} ${q.y.toFixed(0)}L${t.x.toFixed(0)} ${t.y.toFixed(0)}" stroke="${colors(id).line}" stroke-width="${sw.toFixed(1)}"/>`;
   }
-  for (const id of ids) { const t = targets.get(id); s += `<circle cx="${t.x}" cy="${t.y}" r="${id === data.rootId ? 46 : 24}" fill="${colors(id).main}"/>`; }
+  for (const id of ids) {
+    const t = targets.get(id), sz = nodeSize(id);
+    s += `<rect x="${(t.x - sz.w / 2).toFixed(0)}" y="${(t.y - sz.h / 2).toFixed(0)}" width="${sz.w}" height="${sz.h}" rx="10" fill="${colors(id).main}"/>`;
+  }
   $("#miniContent").innerHTML = s;
   drawMiniViewport();
 }
@@ -1042,11 +1215,11 @@ function fillPanel() {
   del.disabled = isRoot || kids.length > 0;
   $("#delHint").textContent = isRoot ? "لا يمكن حذف الجد لأنه أصل الشجرة." : kids.length ? "لا يمكن حذف شخص له أبناء. احذف أبناءه أولًا." : "";
 }
-function updateSelected(patch, { relayout = false } = {}) {
+function updateSelected(patch, { relayout = false, draw = true } = {}) {
   const p = byId.get(selectedId); if (!p) return;
   Object.assign(p, patch);
   saveData();
-  render({ animate: relayout });
+  if (draw) render({ animate: relayout }); // notes and wife's details are not drawn on the map
   fillPanel();
 }
 $("#fName").addEventListener("input", (e) => { const v = e.target.value.trim(); if (v) updateSelected({ name: v }); });
@@ -1054,9 +1227,9 @@ $("#fName").addEventListener("blur", (e) => { if (!e.target.value.trim()) fillPa
 $("#fGender").addEventListener("change", (e) => updateSelected({ gender: e.target.value }));
 $("#fLife").addEventListener("change", (e) => updateSelected({ lifeStatus: e.target.value }));
 $("#fMarital").addEventListener("change", (e) => updateSelected({ maritalStatus: e.target.value }));
-$("#fSpouse").addEventListener("input", (e) => updateSelected({ spouseName: e.target.value }));
-$("#fSpouseFamily").addEventListener("input", (e) => updateSelected({ spouseFamily: e.target.value }));
-$("#fNotes").addEventListener("input", (e) => updateSelected({ notes: e.target.value }));
+$("#fSpouse").addEventListener("input", (e) => updateSelected({ spouseName: e.target.value }, { draw: false }));
+$("#fSpouseFamily").addEventListener("input", (e) => updateSelected({ spouseFamily: e.target.value }, { draw: false }));
+$("#fNotes").addEventListener("input", (e) => updateSelected({ notes: e.target.value }, { draw: false }));
 $("#pClose").addEventListener("click", closePanel);
 $("#pKids").addEventListener("click", (e) => { const b = e.target.closest("[data-goto]"); if (b) select(b.dataset.goto, { pulse: true }); });
 $("#photoBtn").addEventListener("click", () => $("#photoFile").click());
@@ -1131,7 +1304,7 @@ function runSearch() {
     if (score >= 0) scored.push({ id: p.id, score, depth: depthOf(p.id) });
   }
   scored.sort((a, b) => a.score - b.score || a.depth - b.depth);
-  resultIds = scored.slice(0, 30).map((s) => s.id);
+  resultIds = scored.slice(0, 50).map((s) => s.id);
   activeIdx = resultIds.length ? 0 : -1;
   list.innerHTML = resultIds.length
     ? resultIds.map((id, i) => `<li role="option" data-id="${esc(id)}" aria-selected="${i === activeIdx}"><span class="r-name"><i class="r-dot" style="background:${colors(id).main}"></i>${esc(byId.get(id).name)}</span><span class="r-line">${esc(lineage(id))}</span></li>`).join("")
@@ -1193,7 +1366,7 @@ function applyTheme() {
   $("#themeBtn").innerHTML = icons[prefs.theme];
   $("#themeBtn").title = labels[prefs.theme]; $("#themeBtn").setAttribute("aria-label", labels[prefs.theme]);
 }
-function recolor() { if (!data) return; render({ animate: false }); if (selectedId) fillPanel(); }
+function recolor() { if (!data) return; colorCache.clear(); render({ animate: false }); if (selectedId) fillPanel(); }
 $("#themeBtn").addEventListener("click", () => {
   prefs.theme = { auto: "light", light: "dark", dark: "auto" }[prefs.theme];
   savePrefs(); applyTheme(); recolor();
@@ -1217,6 +1390,11 @@ $("#menu").addEventListener("click", async (e) => {
   if (cmd === "export-json") exportJSON();
   else if (cmd === "import-json") $("#importFile").click();
   else if (cmd === "export-png") exportPNG();
+  else if (cmd === "collapse-deep") {
+    collapsed.clear();
+    for (const p of data.people) if (depthOf(p.id) === 1 && kidsOf(p.id).length) collapsed.add(p.id);
+    savePrefs(); closePanel(); render(); setTimeout(() => fitView(), 40);
+  }
   else if (cmd === "expand-all") { collapsed.clear(); savePrefs(); render(); setTimeout(() => fitView(), 40); }
   else if (cmd === "reset") {
     const ok = await confirmBox("إعادة الضبط", "ستُحذف كل التعديلات المحفوظة في هذا المتصفح (أسماء وصور وإضافات) وتعود الشجرة إلى بياناتها الأصلية. صدّر نسخة احتياطية أولًا إن كنت تحتاجها.", "إعادة الضبط", true);
@@ -1309,6 +1487,27 @@ $("#importFile").addEventListener("change", async (e) => {
 });
 
 /* ---------- Export the map as a PNG ---------- */
+// An SVG drawn as an image cannot load web fonts, so embed Almarai as data URLs (skipped silently when offline or blocked).
+let fontCSS = null;
+async function embeddedFontCSS() {
+  if (fontCSS !== null) return fontCSS;
+  try {
+    const href = [...document.querySelectorAll('link[rel="stylesheet"]')].find((l) => l.href.includes("fonts.googleapis.com"))?.href;
+    if (!href) return (fontCSS = "");
+    let css = await (await fetch(href)).text();
+    // keep only the Arabic and basic Latin subsets
+    css = css.split("/*").filter((blk) => /^\s*(arabic|latin)\s*\*\//.test(blk)).map((b) => "/*" + b).join("");
+    const urls = [...new Set(css.match(/https:\/\/fonts\.gstatic\.com\/[^)'"]+/g) || [])];
+    for (const u of urls) {
+      const buf = await (await fetch(u)).arrayBuffer();
+      let bin = ""; const bytes = new Uint8Array(buf);
+      for (let i = 0; i < bytes.length; i += 0x8000) bin += String.fromCharCode(...bytes.subarray(i, i + 0x8000));
+      css = css.split(u).join(`data:font/woff2;base64,${btoa(bin)}`);
+    }
+    fontCSS = css;
+  } catch { fontCSS = ""; }
+  return fontCSS;
+}
 async function exportPNG() {
   toast("جارٍ تجهيز الصورة…");
   if (tween) await new Promise((r) => setTimeout(r, 520));
@@ -1318,13 +1517,16 @@ async function exportPNG() {
   const cs = getComputedStyle(document.documentElement);
   const tokens = ["--bg", "--surface", "--surface-2", "--ink", "--muted", "--line", "--accent", "--accent-soft", "--dec", "--dec-soft", "--font-body", "--font-display"]
     .map((t) => `${t}:${cs.getPropertyValue(t).trim()}`).join(";");
+  const keepSel = selectedId;
+  selectedId = null; applySelectionClasses(); // export the plain tree, without the highlighted lineage
   const clone = $("#content").cloneNode(true);
+  selectedId = keepSel; applySelectionClasses();
   clone.querySelectorAll(".node").forEach((n) => { n.classList.remove("sel", "on-path", "pulse"); n.style.opacity = ""; n.removeAttribute("tabindex"); });
-  clone.querySelectorAll(".edge").forEach((n) => { n.classList.remove("hl"); n.style.opacity = ""; n.setAttribute("fill-opacity", depthOf(n.dataset.id) <= 1 ? ".92" : ".78"); });
+  clone.querySelectorAll(".edge").forEach((n) => { n.style.opacity = ""; });
   clone.querySelectorAll("title").forEach((t) => t.remove());
   const bg = cs.getPropertyValue("--bg").trim();
   const svg = `<svg xmlns="${SVGNS}" xmlns:xlink="http://www.w3.org/1999/xlink" width="${W}" height="${H}" viewBox="${b.x0 - pad} ${b.y0 - pad - titleH} ${W} ${H}">`
-    + `<style>svg{${tokens}}${$("#mapcss").textContent}</style>`
+    + `<style>${await embeddedFontCSS()}svg{${tokens}}${$("#mapcss").textContent}</style>`
     + `<rect x="${b.x0 - pad}" y="${b.y0 - pad - titleH}" width="${W}" height="${H}" fill="${bg}"/>`
     + `<text x="${(b.x0 + b.x1) / 2}" y="${b.y0 - pad - titleH + 52}" text-anchor="middle" style="font-family:var(--font-display);font-weight:700;font-size:30px;fill:var(--ink);direction:rtl">${esc(data.familyName || "عائلة عبدالله")}</text>`
     + clone.outerHTML.replace(/ id="content"/, "") + `</svg>`;
@@ -1350,14 +1552,14 @@ loadAll();
 applyTheme();
 syncLayoutBtn();
 render({ animate: false });
-fitView(false);
+initialView();
 if (!storageOK) setStatus("الحفظ غير متاح في هذا المتصفح؛ استخدم «تصدير ملف البيانات»", true);
 let resizeT;
 addEventListener("resize", () => { clearTimeout(resizeT); resizeT = setTimeout(drawMiniViewport, 120); });
-document.fonts?.ready?.then(() => { render({ animate: false }); });
+document.fonts?.ready?.then(() => { fontFam = ""; resetMeasure(); render({ animate: false }); drawMinimap(); });
 
 // test hook (read-only helpers used by the checks in README)
-window.__familyMap = { get data() { return data; }, lineage, visibleIds, get targets() { return targets; }, select, render };
+window.__familyMap = { get data() { return data; }, lineage, visibleIds, get targets() { return targets; }, select, render, layout: () => computeLayout() };
 })();
 </script>
 <!--APP-END-->
