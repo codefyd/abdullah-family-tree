@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "familyName": "عائلة عبدالله",
+  "rootId": "abdullah",
+  "people": [
+    {"id":"abdullah","name":"عبدالله","parentId":null,"gender":"male","lifeStatus":"deceased","maritalStatus":"married","spouseName":"منيرة سليمان","spouseFamily":"","photo":null,"notes":"الجد المؤسس للشجرة"},
+    {"id":"ayed","name":"عايد","parentId":"abdullah","gender":"male","lifeStatus":"unknown","maritalStatus":"unknown","spouseName":"","spouseFamily":"","photo":null,"notes":""},
+    {"id":"mohammed","name":"محمد","parentId":"abdullah","gender":"male","lifeStatus":"unknown","maritalStatus":"unknown","spouseName":"","spouseFamily":"","photo":null,"notes":""},
+    {"id":"abdulaziz","name":"عبدالعزيز","parentId":"abdullah","gender":"male","lifeStatus":"unknown","maritalStatus":"unknown","spouseName":"","spouseFamily":"","photo":null,"notes":""},
+    {"id":"abdulrahman","name":"عبدالرحمن","parentId":"abdullah","gender":"male","lifeStatus":"unknown","maritalStatus":"unknown","spouseName":"","spouseFamily":"","photo":null,"notes":""},
+    {"id":"issa","name":"عيسى","parentId":"abdullah","gender":"male","lifeStatus":"unknown","maritalStatus":"unknown","spouseName":"","spouseFamily":"","photo":null,"notes":""},
+    {"id":"khaled","name":"خالد","parentId":"abdullah","gender":"male","lifeStatus":"unknown","maritalStatus":"unknown","spouseName":"","spouseFamily":"","photo":null,"notes":""},
+    {"id":"ayed-saleh","name":"صالح","parentId":"ayed","gender":"male","lifeStatus":"unknown","maritalStatus":"married","spouseName":"","spouseFamily":"العبدالرحيم","photo":null,"notes":"اسم الزوجة غير محدد؛ المذكور عائلتها فقط"},
+    {"id":"ayed-abdulsalam","name":"عبدالسلام","parentId":"ayed","gender":"male","lifeStatus":"unknown","maritalStatus":"married","spouseName":"","spouseFamily":"الحميدان","photo":null,"notes":"اسم الزوجة غير محدد؛ المذكور عائلتها فقط"},
+    {"id":"ayed-ziyad","name":"زياد","parentId":"ayed","gender":"male","lifeStatus":"unknown","maritalStatus":"unknown","spouseName":"","spouseFamily":"","photo":null,"notes":""},
+    {"id":"ayed-azzam","name":"عزام","parentId":"ayed","gender":"male","lifeStatus":"unknown","maritalStatus":"unknown","spouseName":"","spouseFamily":"","photo":null,"notes":""},
+    {"id":"ayed-sufyan","name":"سفيان","parentId":"ayed","gender":"male","lifeStatus":"unknown","maritalStatus":"unknown","spouseName":"","spouseFamily":"","photo":null,"notes":""},
+    {"id":"mohammed-abdullah","name":"عبدالله","parentId":"mohammed","gender":"male","lifeStatus":"unknown","maritalStatus":"unmarried","spouseName":"","spouseFamily":"","photo":null,"notes":""},
+    {"id":"mohammed-saleh","name":"صالح","parentId":"mohammed","gender":"male","lifeStatus":"unknown","maritalStatus":"unmarried","spouseName":"","spouseFamily":"","photo":null,"notes":""},
+    {"id":"mohammed-sulaiman","name":"سليمان","parentId":"mohammed","gender":"male","lifeStatus":"unknown","maritalStatus":"unmarried","spouseName":"","spouseFamily":"","photo":null,"notes":""},
+    {"id":"mohammed-alwaleed","name":"الوليد","parentId":"mohammed","gender":"male","lifeStatus":"unknown","maritalStatus":"unmarried","spouseName":"","spouseFamily":"","photo":null,"notes":""},
+    {"id":"abdulaziz-omar","name":"عمر","parentId":"abdulaziz","gender":"male","lifeStatus":"unknown","maritalStatus":"married","spouseName":"","spouseFamily":"أفريح","photo":null,"notes":"اسم الزوجة غير محدد؛ المذكور عائلتها فقط"},
+    {"id":"abdulaziz-tareq","name":"طارق","parentId":"abdulaziz","gender":"male","lifeStatus":"unknown","maritalStatus":"unmarried","spouseName":"","spouseFamily":"","photo":null,"notes":""},
+    {"id":"abdulrahman-faris","name":"فارس","parentId":"abdulrahman","gender":"male","lifeStatus":"unknown","maritalStatus":"married","spouseName":"","spouseFamily":"قصير","photo":null,"notes":"اسم الزوجة غير محدد؛ المذكور عائلتها فقط"},
+    {"id":"abdulrahman-jihad","name":"جهاد","parentId":"abdulrahman","gender":"male","lifeStatus":"unknown","maritalStatus":"unmarried","spouseName":"","spouseFamily":"","photo":null,"notes":""},
+    {"id":"abdulrahman-muhannad","name":"مهند","parentId":"abdulrahman","gender":"male","lifeStatus":"unknown","maritalStatus":"unmarried","spouseName":"","spouseFamily":"","photo":null,"notes":""},
+    {"id":"issa-abdullah","name":"عبدالله","parentId":"issa","gender":"male","lifeStatus":"unknown","maritalStatus":"unknown","spouseName":"","spouseFamily":"","photo":null,"notes":""},
+    {"id":"issa-yazid","name":"يزيد","parentId":"issa","gender":"male","lifeStatus":"unknown","maritalStatus":"unknown","spouseName":"","spouseFamily":"","photo":null,"notes":""},
+    {"id":"issa-rakan","name":"ركان","parentId":"issa","gender":"male","lifeStatus":"unknown","maritalStatus":"unknown","spouseName":"","spouseFamily":"","photo":null,"notes":""},
+    {"id":"issa-fahad","name":"فهد","parentId":"issa","gender":"male","lifeStatus":"unknown","maritalStatus":"unknown","spouseName":"","spouseFamily":"","photo":null,"notes":""},
+    {"id":"khaled-haitham","name":"هيثم","parentId":"khaled","gender":"male","lifeStatus":"unknown","maritalStatus":"unknown","spouseName":"","spouseFamily":"","photo":null,"notes":""}
+  ]
+}
